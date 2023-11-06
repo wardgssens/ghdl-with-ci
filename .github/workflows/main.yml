@@ -1,0 +1,39 @@
+name: Run testbench
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  sim:
+    strategy:
+        matrix:
+          testbench: [tb_counter]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: ghdl/setup-ghdl-ci@nightly
+        with:
+          backend: mcode
+      
+      - name: Import sources
+        run: |
+          ghdl -i --std=08 rtl/*.vhd
+          ghdl -i --std=08 sim/*.vhd
+
+      - name: Elaborate testbench and dependencies
+        run: ghdl -m --std=08 ${{ matrix.testbench }}
+
+      - name: Run simulation (max. simulation time of 10s)
+        run: ghdl -r --std=08 ${{ matrix.testbench }} --vcd=waves.vcd
+
+      - name: Store waves for 
+        uses: actions/upload-artifact@v3
+        with:
+          name: waves
+          path: waves.vcd
+          retention-days: 0.25
