@@ -12,7 +12,7 @@ architecture sim of tb_counter is
 
     signal clk: std_logic := '0';
     signal rst: std_logic := '0';
-    signal val: std_logic_vector(3 downto 0);
+    signal val: std_logic_vector(4 downto 0);
 begin
     i_counter: entity work.counter(rtl)
         port map (
@@ -27,7 +27,7 @@ begin
     p_monitor: process(clk)
     begin
         if rising_edge(clk) then
-            if val = x"F" then
+            if val = b"11111" then
                 finish;
             end if;
         end if;
