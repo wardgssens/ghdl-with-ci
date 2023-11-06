@@ -22,7 +22,7 @@ jobs:
       
       - name: Import sources
         run: |
-          ghdl -i rtl/*.vhd
+          ghdl -i --std=08 rtl/*.vhd
           ghdl -i --std=08 sim/*.vhd
 
       - name: Elaborate testbench and dependencies
