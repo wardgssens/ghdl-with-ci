@@ -27,7 +27,7 @@ begin
     p_monitor: process(clk)
     begin
         if rising_edge(clk) then
-            if val = x"F" then
+            if val = b"11111" then
                 finish;
             end if;
         end if;

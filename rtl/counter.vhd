@@ -6,12 +6,12 @@ entity counter is
     port (
         clk: in std_logic;
         rst: in std_logic;
-        val: out std_logic_vector(3 downto 0)
+        val: out std_logic_vector(4 downto 0)
     );
 end entity;
 
 architecture rtl of counter is
-    subtype t_val_i is natural range 0 to 2**4-1;
+    subtype t_val_i is natural range 0 to 2**val'length-1;
     signal val_i: t_val_i := 0;
 begin
 
